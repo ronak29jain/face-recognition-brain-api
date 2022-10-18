@@ -7,6 +7,7 @@ const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
+const { response } = require('express');
 
 const db = kenx({
   client: 'pg',
@@ -26,7 +27,13 @@ app.use((req, res, next) => {
   next();
 })
 
-app.get('/', (req, res) => {res.send('app is working')})
+app.get('/', (req, res) => {
+  db.select('*').from('users')
+    .then(response => response.json())
+    .then(data => res.send('app is working and data base is also connected: ', data))
+    .catch(err => res.send('app is working but database is not'))
+})
+// app.get('/', (req, res) => {res.send('app is working')})
 app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { profile.handleProfile(req, res, db, bcrypt) })

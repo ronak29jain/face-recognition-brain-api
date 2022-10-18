@@ -23,6 +23,7 @@ const handleSignin = (req, res, db, bcrypt) => {
         res.status(404).json('No Such user is found')
       }
     })
+    .catch(err => res.status(400).json('unable to signin'))
 }
 
 module.exports = {

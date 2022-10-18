@@ -29,12 +29,7 @@ app.use((req, res, next) => {
   next();
 })
 
-// app.get('/', (req, res) => {
-//   db('users').select('*')
-//     .then(users => {res.status(200).json(users)})
-//     .catch (err => res.status(400).json('error getting users'))
-// })
-
+app.get('/', (req, res) => {res.send('app is working')})
 app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { profile.handleProfile(req, res, db, bcrypt) })
